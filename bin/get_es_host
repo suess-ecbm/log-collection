@@ -1,0 +1,8 @@
+#!/bin/bash
+set -o nounset -o pipefail -o errexit -o errtrace
+
+## Deprecated.
+## URL should be preferred because it also includes scheme and port. There
+## might be legacy scripts out there which want the host separately.
+## Example: elastic-examples (Elastic Watcher).
+yq '.client.hosts[0]' "/etc/curator/curator${1:-}.yml" --raw-output

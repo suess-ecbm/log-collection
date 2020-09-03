@@ -1,0 +1,14 @@
+---
+
+# yamllint disable rule:empty-lines
+
+## curator.yml file for command line use. For using curator in cron, refer to
+## curator_cron.yml.
+## Because curator.yml is the default file name for curator, cli usage
+## works by default.
+## This config file causes curator to write to stdout/stderr instead of just
+## writing to a log file.
+
+logging:
+  # loglevel: DEBUG
+  loglevel: INFO

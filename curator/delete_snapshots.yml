@@ -1,0 +1,39 @@
+---
+
+actions:
+
+  7:
+    action: delete_snapshots
+    options:
+      repository: 'es-backup'
+      ignore_empty_list: true
+
+    filters:
+
+      - filtertype: pattern
+        kind: prefix
+        value: 'snapshot_cron_7_'
+
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 7
+
+  100:
+    action: delete_snapshots
+    options:
+      repository: 'es-backup'
+      ignore_empty_list: true
+
+    filters:
+
+      - filtertype: pattern
+        kind: prefix
+        value: 'snapshot_cron_100_'
+
+      - filtertype: age
+        source: creation_date
+        direction: older
+        unit: days
+        unit_count: 100

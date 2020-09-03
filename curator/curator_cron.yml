@@ -1,0 +1,14 @@
+---
+
+# yamllint disable rule:empty-lines
+
+## curator.yml file for use in cron. For this, specify
+## `--config ~/.curator/curator_cron.yml`.
+## This config file causes curator to write to structured log events to
+## /var/log/curator/curator.json
+
+logging:
+  # loglevel: DEBUG
+  loglevel: INFO
+  logfile: '/var/log/curator/curator.json'
+  logformat: logstash

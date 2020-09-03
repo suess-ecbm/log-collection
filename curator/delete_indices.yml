@@ -1,0 +1,287 @@
+---
+
+# yamllint disable rule:line-length
+
+## Don't automatically delete indices which are too old to keep restores of old data.
+## Too old:
+## * Daily index: 2days (this gives the script two days/nights to delete indices, after that, they need to be deleted manually)
+## * Monthly index: 2days (gives 1 month - 2 days)
+## * Yearly index: 2days (gives 1 year - 2 days)
+
+## Deprecated: Use "count" filtertype instead of "age" to better work with gaps in index-sets.
+## Use the "age" filtertype for both because if there is a gap, it should be closed/reimported of course.
+
+## Key: Required retention time in days, space, index rollover interval.
+actions:
+
+  '3 days, daily':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      # - filtertype: pattern
+      #   kind: regex
+      #   value: '^\.'
+      #   exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:\.security_audit_log-)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: older
+        unit: days
+        unit_count: 3
+
+      ## Don't automatically delete indices which are too old to keep restores of old data.
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: younger
+        unit: days
+        unit_count: 5
+
+  '8 days, daily':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      - filtertype: pattern
+        kind: regex
+        value: '^\.'
+        exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:logs_example-8-days_)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: older
+        unit: days
+        unit_count: 8
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: younger
+        unit: days
+        unit_count: 10
+
+  '32 days, daily':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      # - filtertype: pattern
+      #   kind: regex
+      #   value: '^\.'
+      #   exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:\.watcher-history-|\.reporting-)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: older
+        unit: days
+        unit_count: 32
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: younger
+        unit: days
+        unit_count: 34
+
+  '32 days, monthly':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      - filtertype: pattern
+        kind: regex
+        value: '^\.'
+        exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:logs_example-32-days_)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m'
+        direction: older
+        unit: days
+        unit_count: 60
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m'
+        direction: younger
+        unit: days
+        unit_count: 62
+
+      - filtertype: pattern
+        kind: timestring
+        value: '-%Y.%m.%d'
+        exclude: true
+
+
+  '100 days, daily':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      - filtertype: pattern
+        kind: regex
+        value: '^\.'
+        exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:logs_example-100-days_)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: older
+        unit: days
+        unit_count: 100
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m.%d'
+        direction: younger
+        unit: days
+        unit_count: 102
+
+  '100 days, monthly':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      - filtertype: pattern
+        kind: regex
+        value: '^\.'
+        exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:logs_example-100-days-monthly_)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m'
+        direction: older
+        unit: days
+        unit_count: 120
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m'
+        direction: younger
+        unit: days
+        unit_count: 122
+
+
+  '450 days, monthly':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      - filtertype: pattern
+        kind: regex
+        value: '^\.'
+        exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:logs_example-450-days-monthly_)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m'
+        direction: older
+        unit: days
+        unit_count: 480
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y.%m'
+        direction: younger
+        unit: days
+        unit_count: 482
+
+
+  '450 days, yearly':
+    action: delete_indices
+    options:
+      ignore_empty_list: true
+    filters:
+
+      ## Safety first!
+      - filtertype: kibana
+        exclude: true
+      # - filtertype: pattern
+      #   kind: regex
+      #   value: '^\.'
+      #   exclude: true
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:logs_example-450-days-yearly_)'
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y'
+        direction: older
+        unit: days
+        ## Can not be done with yearly indices.
+        # unit_count: 450
+        unit_count: 732
+
+      - filtertype: age
+        source: name
+        timestring: '-%Y'
+        direction: younger
+        unit: days
+        unit_count: 734
+
+      - filtertype: pattern
+        kind: timestring
+        value: '-%Y.%m'
+        exclude: true

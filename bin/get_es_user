@@ -1,0 +1,4 @@
+#!/bin/bash
+set -o nounset -o pipefail -o errexit -o errtrace
+
+yq '(.client.http_auth // "") | split(":") | (.[0] // "")' "/etc/curator/curator${1:-}.yml" --raw-output

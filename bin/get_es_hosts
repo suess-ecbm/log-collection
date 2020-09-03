@@ -1,0 +1,7 @@
+#!/bin/bash
+set -o nounset -o pipefail -o errexit -o errtrace
+
+## This might be useful together with pssh. See also ./get_es_other_hosts.
+## Example: pssh -H "$(get_es_other_hosts)" -iq uptime | sort
+
+yq '.["discovery.zen.ping.unicast.hosts"][]' /etc/elasticsearch/elasticsearch.yml --raw-output | sort

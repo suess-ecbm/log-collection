@@ -1,0 +1,39 @@
+---
+
+actions:
+  7:
+    action: snapshot
+    options:
+      repository: 'es-backup'
+
+      name: 'snapshot_cron_7_%Y-%m-%d_%H:%M:%S'
+
+      ignore_unavailable: false
+      include_global_state: true
+      partial: false
+      wait_for_completion: true
+      skip_repo_fs_check: false
+    filters:
+
+      - filtertype: pattern
+        kind: regex
+        exclude: true
+        value: '^(?:logs_longer-retention-wanted_|\.watcher-history)'
+
+  100:
+    action: snapshot
+    options:
+      repository: 'es-backup'
+
+      name: 'snapshot_cron_100_%Y-%m-%d_%H:%M:%S'
+
+      ignore_unavailable: false
+      include_global_state: true
+      partial: false
+      wait_for_completion: true
+      skip_repo_fs_check: false
+    filters:
+
+      - filtertype: pattern
+        kind: regex
+        value: '^(?:logs_longer-retention-wanted_|\.watcher-history)'

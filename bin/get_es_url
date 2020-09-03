@@ -1,0 +1,4 @@
+#!/bin/bash
+set -o nounset -o pipefail -o errexit -o errtrace
+
+yq '"http" + (if .client.use_ssl then "s" else "" end) + "://" + .client.hosts[0] + ":" + ((.client.port // 9200 | tostring))' "/etc/curator/curator${1:-}.yml" --raw-output
