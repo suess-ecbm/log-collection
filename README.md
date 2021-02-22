@@ -15,6 +15,16 @@ We have not fully adapted to the Elastic Common Schema yet. If you start out new
 * [./curator/](/curator): Curator examples
 * [./index_template_backup/](/index_template_backup): Index template backup Makefile script for easy (version controlled) backup and restore of index templates.
 
+## Elasticsearch
+
+### Shard size
+
+Search for shards that are outside of the recommended size (big but no bigger than 50 GB):
+
+```
+GET /_cat/shards?bytes=gb&s=store:desc,p,s,node&v&h=i,store,p,s,node
+```
+
 ## Kibana
 
 ### Saved Searches
