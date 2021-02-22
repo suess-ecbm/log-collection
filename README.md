@@ -178,10 +178,3 @@ jq --raw-output '.product.search_code[] | ("''" + .search_code + "'': ''" + .ser
 ```
 
 Depends on Elasticsearch >= 6.6.0. Ref: https://github.com/elastic/elasticsearch/pull/35184
-
-## License
-
-[AGPL-3.0-only](https://www.gnu.org/licenses/agpl-3.0.html)
-
-* Author Copyright (C) 2017-2019 Robin Schneider
-* Company Copyright (C) 2017-2019 [Geberit Verwaltungs GmbH](https://www.geberit.de)
