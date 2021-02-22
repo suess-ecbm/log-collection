@@ -13,7 +13,7 @@ Version 1 developed naturally and taught us some lessons which later guided the 
 
 ### Version 1
 
-Status: Deprecated.
+Status: Used in production.
 
 Index name components:
 
@@ -106,7 +106,7 @@ Examples:
 * `log_network-switch__v1_2023-05`
 
   ```
-  #source: network-switch_vendor=hpe
+  #source: network-switch_vendor=CumulusExpress
   ```
 
 * `log_network-switch-management__v1_2023-05`
@@ -129,10 +129,10 @@ Examples:
 
 * `log_server-bmc__v1_2023-05`
 * `log_server-package-manager_env=staging__v1_2023-05-23`
-* `log_server-windows_service=dc_log-name=security__v1_2023-05-23`
-* `log_server-windows_service=dc_log-name=other__v1_2023-05`
-* `log_server-windows_service=main_log-name=security__v1_2023-05-23`
-* `log_server-windows_service=main_log-name=other__v1_2023-05`
+* `log_server-windows_service=dc_logName=security__v1_2023-05-23`
+* `log_server-windows_service=dc_logName=other__v1_2023-05`
+* `log_server-windows_service=main_logName=security__v1_2023-05-23`
+* `log_server-windows_service=main_logName=other__v1_2023-05`
 * `log_server-gnu-linux__v1_2023-05`
 * `log_server-windows-dhcp__v1_2023-05` (theoretical)
 * `log_server-windows-dns__v1_2023-05` (theoretical)
@@ -144,8 +144,7 @@ Examples:
 * `log_alerting__v1_2023`
   PagerDuty
 * `log_monitoring-events__v1_2023-05`
-* `state_monitoring-events_filter=latest__v1_2023-05`
-* `log_monitoring-events_test=some-index-mapping-change_author=ypid__v1_2023-05`
+* `log_monitoring-events_test=someIndexMappingChange_author=ypid__v1_2023-05`
 * `log_monitoring-notifications__v1_2023`
 * `log_monitoring-host-down-elapsed__v1_2023`
 * `log_e2e-tests__v1_2023`
@@ -181,6 +180,20 @@ Examples:
 * `unknown_input__v1_2023`
   For unknown Logstash inputs. Reasons: unassigned category and source, unparsable JSON input.
 
+Background:
+
+The switch from hyphens to underscores as component separator has been done for the following reasons:
+
+* Index names should contain a timestamp. For timestamps the universal standard is RFC 3339/ISO 8601 which uses hyphens.
+* It has been used in the [Elasticsearch - The Definitive Guide](https://www.elastic.co/guide/en/elasticsearch/guide/current/time-based.html).
+
+
+Refs: https://github.com/elastic/kibana/issues/2017#issuecomment-168816164
+
+The category has been introduced to allow to have index templates which serve as a default for the category.
+
+This also addresses the issue to only match custom indices using the [`index_patterns`](https://www.elastic.co/guide/en/elasticsearch/reference/6.2/indices-templates.html) and no hidden/system indices. There is currently no way to ensure this otherwise. Ref: https://github.com/elastic/elasticsearch/issues/17247
+
 Example index patterns:
 
 * `log_*`: Match all logs.
@@ -208,6 +221,21 @@ Example mapping optimization:
 
 * Disable `_source` for all `metric_*`.
   https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-source-field.html#_disabling_the_literal__source_literal_field
+
+
+### Index format version:
+
+Increment this if you make changes to field datatypes.
+This is done for two reasons:
+
+1. To make it possible in Kibana to create new index-patterns without conflicts.
+2. To allow reindexing old indices into new once. This requires a new name.
+
+Note that there is one downside to this. When you refer to a document in
+another index with `{{index}}/{{_id}}`, the index will change and
+the ref will not work anymore.
+
+A alternative is to use index aliases.
 
 ## Elasticsearch field naming convention
 
