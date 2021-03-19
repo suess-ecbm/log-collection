@@ -5,12 +5,12 @@ Author: Robin Schneider
 
 ## Requirements
 
-* Severity must be as specified in [RFC 5424 (section 6.2.1)](https://tools.ietf.org/html/rfc5424#section-6.2.1).
+* Severity must be as specified in [RFC 5424 (section 6.2.1)](https://tools.ietf.org/html/rfc5424#section-6.2.1) format.
   Severity/Priority must either be the numerical code or a supported keyword as in https://en.wikipedia.org/wiki/Syslog#Severity_level
   It should be easily searchable e.g. the syslog formula is bad.
   See also: https://wiki.archlinux.org/index.php/Systemd/Journal#Priority_level
-* Timestamp must be as specified in [RFC 5424 (section 6.2.3)](https://tools.ietf.org/html/rfc5424#section-6.2.3).
-* Host must be as specified in [RFC 5424 (section 6.2.4)](https://tools.ietf.org/html/rfc5424#section-6.2.4).
+* Timestamp must be as specified in [RFC 5424 (section 6.2.3)](https://tools.ietf.org/html/rfc5424#section-6.2.3) format.
+* Host must be as specified in [RFC 5424 (section 6.2.4)](https://tools.ietf.org/html/rfc5424#section-6.2.4) format.
 * Multiline/Newline in message text. Think about stack traces!
 * Structured data must be supported.
 * Use a well-known logging framework for your programming language.
