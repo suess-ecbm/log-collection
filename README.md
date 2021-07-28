@@ -112,24 +112,7 @@ Range         | Severity keyword | Color name    | Color RGB HTML code
 The following Update By Query API calls can be used to add this color highlighting to all Kibana index patterns where the field `severity` exists and which currently does not have any field formatting configured.
 
 ```
-## ES 5.X:
-POST .kibana/_update_by_query
-{
-  "script": {
-    "inline": "ctx._source.fieldFormatMap = params.fieldFormatMap;",
-    "lang": "painless",
-    "params": {
-      "fieldFormatMap" : """{"severity":{"id":"color","params":{"fieldType":"number","colors":[{"range":"-Infinity:2.5","regex":"<insert regex>","text":"#000000","background":"#FF4136"},{"range":"2.5:3.5","regex":"<insert regex>","text":"#000000","background":"#FF851B"},{"range":"3.5:4.5","regex":"<insert regex>","text":"#000000","background":"#FFDC00"},{"range":"4.5:Infinity","regex":"<insert regex>","text":"#000000","background":"#2ECC40"}]}}}"""
-    }
-  },
-  "query": {
-    "query_string": {
-      "query": "+fields:severity -_exists_:fieldFormatMap"
-    }
-  }
-}
-
-## ES 6.X and 7.X:
+## Kibana 6.X and 7.X:
 POST .kibana-6/_update_by_query
 // Or
 POST .kibana_7/_update_by_query
