@@ -147,6 +147,24 @@ POST .kibana_7/_update_by_query
     }
   }
 }
+
+## ES 7.12+ with ECS:
+## Note that the search for index-pattern.fieldFormatMap does not work anymore because this field is not indexed anymore. The recommended way to use this is to manually check for documents without index-pattern.fieldFormatMap and update the query below.
+POST .kibana/_update_by_query
+{
+  "script": {
+    "source": "ctx._source['index-pattern']['fieldFormatMap'] = params.fieldFormatMap;",
+    "lang": "painless",
+    "params": {
+      "fieldFormatMap" : """{"event.severity":{"id":"color","params":{"fieldType":"number","colors":[{"range":"-Infinity:2.5","regex":"<insert regex>","text":"#000000","background":"#FF4136"},{"range":"2.5:3.5","regex":"<insert regex>","text":"#000000","background":"#FF851B"},{"range":"3.5:4.5","regex":"<insert regex>","text":"#000000","background":"#FFDC00"},{"range":"4.5:Infinity","regex":"<insert regex>","text":"#000000","background":"#2ECC40"}]}},"log.level":{"id":"color","params":{"fieldType":"string","colors":[{"range":"-Infinity:Infinity","regex":"^(?:emerg|alert|crit)","text":"#000000","background":"#FF4136"},{"range":"-Infinity:Infinity","regex":"^(?:err)","text":"#000000","background":"#FF851B"},{"range":"-Infinity:Infinity","regex":"^(?:warn)","text":"#000000","background":"#FFDC00"},{"range":"-Infinity:Infinity","regex":"^(?:notice|info|debug)","text":"#000000","background":"#2ECC40"}]}},"tags":{"id":"color","params":{"fieldType":"string","colors":[{"range":"-Infinity:Infinity","regex":".*untrusted.*","text":"#000000","background":"#FF851B"},{"range":"-Infinity:Infinity","regex":"parse_failure","text":"#000000","background":"#FF4136"},{"range":"-Infinity:Infinity","regex":"parse_warning","text":"#000000","background":"#FFDC00"}]}},"host.uptime":{"id":"duration"}}"""
+    }
+  },
+  "query": {
+    "query_string": {
+      "query": "+index-pattern.title:log_mypattern__v1"
+    }
+  }
+}
 ```
 
 ### Human readable severity keyword using scripted field (painless)
