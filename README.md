@@ -38,12 +38,12 @@ Field order: @timestamp, severity, host, [custom fields of that index-set]
   "config": {
     "context:defaultSize": "3",
     "dateFormat:dow": "Monday",
-    "dateFormat": "ddd YYYY-MM-DD HH:mm:ss.SSS",
+    "dateFormat": "ddd YYYY-MM-DD HH:mm:ss.SSSSSSSSS",
     "format:bytes:defaultPattern": "0.[0] b",
     "format:number:defaultPattern": "0.[000]",
     "dateFormat:scaled": """
 [
-  ["", "HH:mm:ss.SSS"],
+  ["", "HH:mm:ss.SSSSSSSSS"],
   ["PT1S", "HH:mm:ss"],
   ["PT1M", "HH:mm"],
   ["PT1H", "ddd YYYY-MM-DD HH:mm"],
