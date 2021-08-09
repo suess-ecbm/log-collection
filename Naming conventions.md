@@ -200,6 +200,8 @@ Example index patterns:
 * `log_network-firewall-sessions_*`: Match all network-firewall-sessions logs. This would be the index pattern used in specific index templates.
 * `log_network-firewall-sessions__*`: Match all production network-firewall-sessions logs. This would be the typical index pattern used in Kibana.
 * `log_network-firewall-sessions__v1_`: Match all production network-firewall-sessions logs with index format version 1.
+* `log_network-firewall-sessions__v1`: Match ILM alias of all network-firewall-sessions logs.
+* `log_network-firewall-sessions__v1,-event.created`: Same as `log_network-firewall-sessions__v1` but with the `event.created` field as the time reference. Technically, this is a creative use of the [Multi-target syntax](https://www.elastic.co/guide/en/elasticsearch/reference/current/multi-index.html).
 * `metric_e2e-tests_env=dev__*`: Match all production network-firewall-sessions logs with index format version 1.
 * `*_*__v*_*` for use in index templates to catch all indices following v2 of the syntax.
 
